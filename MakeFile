@@ -1,0 +1,26 @@
+# Derleme işlemi için kullanılacak C++ derleyici
+CXX = g++
+
+# Derleme sırasında kullanılacak derleme seçenekleri
+CXXFLAGS = -std=c++11 -Wall
+
+# Derlenen nesnelerin ve hedef dosyanın adı
+TARGET = program
+
+# Kaynak dosyaların listesi
+SRCS = main.cpp file1.cpp file2.cpp
+
+# Nesne dosyaların adları, kaynak dosyaların .cpp uzantısı yerine .o uzantısı ile
+OBJS = $(SRCS:.cpp=.o)
+
+# Hedef dosya ve bağımlılıklarını oluşturmak için kullandığımız kurallar
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(OBJS)
+
+# Temizlik işlemi için kullanılan hedef (nesne dosyalarını ve hedef dosyayı siler)
+clean:
+	rm -f $(OBJS) $(TARGET)
+
+# Her kaynak dosyası için derleme kuralları (her .cpp dosyasından .o dosyası oluşturur)
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
